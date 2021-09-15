@@ -4,11 +4,15 @@ Reources for the FA 2021 CSC Data Structures Class
 
 Structure for homework submissions is as follows:
 
+
 |the root folder of the project repository
+
 
 |----weekX
 
+
 |----|----student1
+
 
 |----|----studentN
 
