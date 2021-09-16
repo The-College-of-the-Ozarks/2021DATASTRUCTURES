@@ -1,0 +1,3 @@
+#/ Store each student's github username (case sensitive) on their own lines
+#/ example: H0rologium (then, on a new line) jburton989
+H0rologium
