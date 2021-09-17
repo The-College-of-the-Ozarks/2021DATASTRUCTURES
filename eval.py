@@ -21,12 +21,12 @@ def main():
     studentReopList = cloneBuilder(repoName)
     for student in studentRepoList:
         os.mkdir(os.getcwd() + student)
+        os.chdir(os.getcwd() + student)
         
     #Copy student folders into an appdata folder
     #TODO
     #For each student's assignment files, run pytest and grade?
     #TODO
-
 
 
 
