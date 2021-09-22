@@ -1,6 +1,6 @@
 import pytest as pt
 import os
-import git
+import pygit2 as git
 #Grading structure based on https://github.com/The-College-of-the-Ozarks/2021DATASTRUCTURES/blob/main/README.md
 
 
@@ -26,11 +26,12 @@ def main():
     #Make the root dirs to clone into
     for student in studentRepoList[1]:
         if '#' not in student:
-            os.mkdir(os.getcwd() + '/' + str(student))
+            if not os.path.exists(os.getcwd() + '/' + str(student)):
+                os.mkdir(os.getcwd() + '/' + str(student))
             print('Made a folder for ' + student)
             #Clone each student's repo
             print('Cloning ' + repoName + ' for ' + student)
-            cloned_repo = repo.clone(os.path.join(rw_dir, '')
+            git.clone_repository(
 
     studentReopList = cloneBuilder(repoName)
     for student in studentRepoList:
