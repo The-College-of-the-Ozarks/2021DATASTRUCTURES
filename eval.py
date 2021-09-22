@@ -24,26 +24,24 @@ def main():
     studentRepoList = cloneBuilder(repoName)
     print(studentRepoList[1])
     #Make the root dirs to clone into
-    for student in studentRepoList[1]:
-        if '#' not in student:
-            if not os.path.exists(os.getcwd() + '/' + str(student)):
-                os.mkdir(os.getcwd() + '/' + str(student))
-            print('Made a folder for ' + student)
+    for student in zip(studentRepoList[1], studentRepoList[0]):
+        if '#' not in student[0]:
+            if not os.path.exists(os.getcwd() + '/' + str(student[0])):
+                os.mkdir(os.getcwd() + '/' + str(student[0]))
+            print('Made a folder for ' + student[0])
+            os.chdir(os.path.join(os.getcwd() + '/' + str(student[0])))
             #Clone each student's repo
-            print('Cloning ' + repoName + ' for ' + student)
-            git.clone_repository(
-
-    studentReopList = cloneBuilder(repoName)
-    for student in studentRepoList:
-        os.mkdir(os.getcwd() + student)
-        os.chdir(os.getcwd() + student)
+            print('Cloning ' + repoName + ' for ' + student[0])
+            git.clone_repository(repos, '/' + str(student[1]))
         
     #Copy student folders into an appdata folder
             
     #TODO
     #For each student's assignment files, run pytest and grade?
     #TODO
-
+    #Post-grading cleanup, delete what we dont need
+    #TODO
+                             
 
 
 
