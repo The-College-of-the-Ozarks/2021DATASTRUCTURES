@@ -16,6 +16,14 @@ def cloneBuilder(rootRepo):
     return [fNames, people]
 
 
+def setupRepo():
+
+
+
+    return
+
+
+
 
 
 def main():
@@ -33,14 +41,8 @@ def main():
             #Clone each student's repo
             print('Cloning ' + repoName + ' for ' + student[0])
             git.clone_repository(repos, '/' + str(student[1]))
-        
-    #Copy student folders into an appdata folder
-            
-    #TODO
-    #For each student's assignment files, run pytest and grade?
-    #TODO
-    #Post-grading cleanup, delete what we dont need
-    #TODO
+    #Setup the files in these repos to grade
+    setupRepo()
                              
 
 
