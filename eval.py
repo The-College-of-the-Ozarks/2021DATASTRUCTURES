@@ -17,8 +17,11 @@ def cloneBuilder(rootRepo):
 
 
 def setupRepo():
-
-
+    #Make new folder to store student files
+    root = os.path.join(os.path.expandvars('%appdata%'),'homework')
+    if os.path.exists(root):
+        os.rmdir(root)
+    
 
     return
 
