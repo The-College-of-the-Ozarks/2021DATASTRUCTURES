@@ -1,6 +1,7 @@
 import pytest as pt
 import os
 import pygit2 as git
+import shutil as shell
 #Grading structure based on https://github.com/The-College-of-the-Ozarks/2021DATASTRUCTURES/blob/main/README.md
 
 
@@ -16,12 +17,16 @@ def cloneBuilder(rootRepo):
     return [fNames, people]
 
 
-def setupRepo():
+def setupRepo(count, students):
     #Make new folder to store student files
     root = os.path.join(os.path.expandvars('%appdata%'),'homework')
     if os.path.exists(root):
         os.rmdir(root)
-    
+    os.mkdir(root)
+    for student in range(0,count):
+        if not os.path.exists(os.path.join(root + '/' + students[0][student])):
+            os.mkdir(os.path.join(root + '/' + students[0][student]))
+        shell.copytree(
 
     return
 
@@ -34,6 +39,7 @@ def main():
     repoName = input('Please enter the name of the repository that will be cloned from the students (case sensitive)')
     studentRepoList = cloneBuilder(repoName)
     print(studentRepoList[1])
+    studentcount = 0
     #Make the root dirs to clone into
     for student in zip(studentRepoList[1], studentRepoList[0]):
         if '#' not in student[0]:
@@ -44,8 +50,9 @@ def main():
             #Clone each student's repo
             print('Cloning ' + repoName + ' for ' + student[0])
             git.clone_repository(repos, '/' + str(student[1]))
+        studentcount = studentcount + 1
     #Setup the files in these repos to grade
-    setupRepo()
+    setupRepo(studentcount, studentRepoList)
                              
 
 
