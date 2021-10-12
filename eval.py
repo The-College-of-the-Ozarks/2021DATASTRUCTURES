@@ -2,9 +2,13 @@ import pytest as pt
 import os
 import pygit2 as git
 import shutil as shell
-#Grading structure based on https://github.com/The-College-of-the-Ozarks/2021DATASTRUCTURES/blob/main/README.md
 
 
+'''
+Reads input from the usernames.txt file to determine who to clone repositories from.
+Repository MUST be public and follow conventions from:
+https://github.com/The-College-of-the-Ozarks/2021DATASTRUCTURES/blob/main/README.md
+'''
 def cloneBuilder(rootRepo):
     fNames = []
     sfh = "https://github.com/"
@@ -16,22 +20,33 @@ def cloneBuilder(rootRepo):
     igns.close()
     return [fNames, people]
 
-
-def setupRepo(count, students):
+'''
+Moving all student folders into a custom location for ease of grading later
+All files are copied, and the copies will be removed after usage
+This is run after repositories are cloned
+'''
+def setupRepo(count, students, rootDir):
     #Make new folder to store student files
     root = os.path.join(os.path.expandvars('%appdata%'),'homework')
     if os.path.exists(root):
         os.rmdir(root)
     os.mkdir(root)
     for student in range(0,count):
-        if not os.path.exists(os.path.join(root + '/' + students[0][student])):
-            os.mkdir(os.path.join(root + '/' + students[0][student]))
-        shell.copytree(
+        if not os.path.exists(os.path.join(root + '/' + students[student][0])):
+            os.mkdir(os.path.join(root + '/' + students[student][0]))
+        shell.copytree(os.path.join(rootDir + '/' + students[student][0]), os.path.join(root + '/' + students[student][0]))
+    #Each student now has their own folder with their python files
+    return os.path.join(os.path.expandvars('%appdata%'),'homework')
+
+'''
+This is where the actual unit tests are run
+the files ran against are temporarily stored in ...AppData/Roaming/homework
+and listed by username
+'''
+def evaluate(rwd):
+    
 
     return
-
-
-
 
 
 def main():
@@ -40,6 +55,7 @@ def main():
     studentRepoList = cloneBuilder(repoName)
     print(studentRepoList[1])
     studentcount = 0
+    rootDir = os.getcwd()
     #Make the root dirs to clone into
     for student in zip(studentRepoList[1], studentRepoList[0]):
         if '#' not in student[0]:
@@ -52,18 +68,7 @@ def main():
             git.clone_repository(repos, '/' + str(student[1]))
         studentcount = studentcount + 1
     #Setup the files in these repos to grade
-    setupRepo(studentcount, studentRepoList)
-                             
-
-
-
-
-
-
-
-
-
-
+    evaluate(setupRepo(studentcount, studentRepoList, rootDir))
 
 if __name__=='__main__':
     main()
