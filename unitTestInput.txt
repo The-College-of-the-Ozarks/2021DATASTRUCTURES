@@ -1,1 +1,8 @@
 #Enter the unit test to be used and what value we are expecting the result to be.
+#Example, if the student's project was to multiply the matrices [[5,6,3],[2,1,4],[3,3,3]] and [[0,2,5],[8,2,5,],[6,9,9]] 
+#And the result was [[0,12,15],[16,2,20],[18,27,27]] then we would write (without the # symbols): 
+# arg [[5,6,3],[2,1,4],[3,3,3]] 
+# arg [[0,2,5],[8,2,5,],[6,9,9]]
+# expect [[0,12,15],[16,2,20],[18,27,27]]
+# arg precedes any argument that will be passed to the python program. The student should have written cabaility for this
+# (arguments in the main method) and every arg is ran in order. expect is what we will compare the exact results to. Strings WILL BE case sensitive
