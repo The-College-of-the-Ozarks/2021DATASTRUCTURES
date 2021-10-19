@@ -75,6 +75,7 @@ def main():
     evaluate(setupRepo(studentcount, studentRepoList, rootDir), studentcount)
     '''
     #The key to the solution lies here
+    #For each student folder, run this pytest. use time to find out how long execution took.
     os.chdir('')
     os.system('python -m pytest'  + '>> out.txt')
     
