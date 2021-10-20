@@ -1,7 +1,6 @@
 import os
 import pygit2 as git
 import shutil as shell
-#import unittest as ut
 import pytest as ut
 
 '''
@@ -15,8 +14,9 @@ def cloneBuilder(rootRepo):
     igns = open('usernames.txt', 'r')
     people = []
     for name in igns:
-        fNames.append(sfh + name + '/' + rootRepo + '.git')
-        people.append(name)
+        if '#' not in name:
+            fNames.append(sfh + name + '/' + rootRepo + '.git')
+            people.append(name)
     igns.close()
     return [fNames, people]
 
@@ -32,9 +32,9 @@ def setupRepo(count, students, rootDir):
         os.rmdir(root)
     os.mkdir(root)
     for student in range(0,count):
-        if not os.path.exists(os.path.join(root + '/' + students[student][0])):
-            os.mkdir(os.path.join(root + '/' + students[student][0]))
-        shell.copytree(os.path.join(rootDir + '/' + students[student][0]), os.path.join(root + '/' + students[student][0]))
+        if os.path.exists(os.path.join(root + '/' + students[1][student])):
+            shell.rmtree(os.path.join(root + '/' + students[1][student]))
+        shell.copytree(os.path.join(rootDir + '/' + students[1][student]), os.path.join(root + '/' + students[1][student]))
     #Each student now has their own folder with their python files
     return os.path.join(os.path.expandvars('%appdata%'),'homework')
 
@@ -46,16 +46,20 @@ and listed by username
 def evaluate(rwd, count):
     studentFolders = os.listdir(rwd)
     testInput = open(os.path.join(os.getcwd(), "unitTestInput.txt"), 'r')
-    #
     for i in range(0, count):
-        pass
-            
+        #The key to the solution lies here
+        #For each student folder, run this pytest. use time to find out how long execution took.
+        os.chdir(os.path.join(rwd, studentFolders[i]))
+        os.system('python -m pytest'  + '>> out.txt')
+        f = open(os.path.join(rwd,'out.txt'))
+        print(f.read())
+        f.close()
     return
 
 
 def main():
     #Clone repos to a temp folder
-    '''repoName = input('Please enter the name of the repository that will be cloned from the students (case sensitive)')
+    repoName = input('Please enter the name of the repository that will be cloned from the students (case sensitive)')
     studentRepoList = cloneBuilder(repoName)
     print(studentRepoList[1])
     studentcount = 0
@@ -69,15 +73,15 @@ def main():
             os.chdir(os.path.join(os.getcwd() + '/' + str(student[0])))
             #Clone each student's repo
             print('Cloning ' + repoName + ' for ' + student[0])
-            git.clone_repository(studentRepoList[0], '/' + str(student[1]))
+            #Pygit cannot concatenate within the same statement
+            url = student[1]
+            print(str(url))
+            git.clone_repository(url, os.getcwd())
         studentcount = studentcount + 1
     #Setup the files in these repos to grade
     evaluate(setupRepo(studentcount, studentRepoList, rootDir), studentcount)
-    '''
-    #The key to the solution lies here
-    #For each student folder, run this pytest. use time to find out how long execution took.
-    os.chdir('')
-    os.system('python -m pytest'  + '>> out.txt')
+    
+    
     
     
 if __name__=='__main__':
