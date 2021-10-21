@@ -13,3 +13,9 @@ Ex: /studantName/
                     assignment2/
           ProblemN/          
                     assignmentN/
+
+
+In order to run the testing program AT ALL, two naming conventions need to be followed:
+The student's file  name needs  to be prefixed with 'test_'
+The main method in the student's file needs to be prefixed with 'test_' 
+(The main method does not need any explicit calls, this program uses pytest which automatically will run the test method)
