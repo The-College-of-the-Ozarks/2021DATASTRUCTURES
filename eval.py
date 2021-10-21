@@ -2,6 +2,7 @@ import os
 import pygit2 as git
 import shutil as shell
 import pytest as ut
+import subprocess as sus
 
 '''
 Reads input from the usernames.txt file to determine who to clone repositories from.
@@ -29,7 +30,7 @@ def setupRepo(count, students, rootDir):
     #Make new folder to store student files
     root = os.path.join(os.path.expandvars('%appdata%'),'homework')
     if os.path.exists(root):
-        os.rmdir(root)
+        os.system('del ' + root + ' /f /q')
     os.mkdir(root)
     for student in range(0,count):
         if os.path.exists(os.path.join(root + '/' + students[1][student])):
@@ -45,15 +46,17 @@ and listed by username
 '''
 def evaluate(rwd, count):
     studentFolders = os.listdir(rwd)
+    os.chdir('..')
     testInput = open(os.path.join(os.getcwd(), "unitTestInput.txt"), 'r')
     for i in range(0, count):
         #The key to the solution lies here
         #For each student folder, run this pytest. use time to find out how long execution took.
         os.chdir(os.path.join(rwd, studentFolders[i]))
-        os.system('python -m pytest'  + '>> out.txt')
+        os.system('python -m pytest'  + '>> ../out.txt')
         f = open(os.path.join(rwd,'out.txt'))
         print(f.read())
         f.close()
+    testInput.close()
     return
 
 
