@@ -3,6 +3,7 @@ import pygit2 as git
 import shutil as shell
 import pytest as ut
 import subprocess as sus
+import testCaseGenerator as tester
 
 '''
 Reads input from the usernames.txt file to determine who to clone repositories from.
@@ -47,6 +48,8 @@ and listed by username
 def evaluate(rwd, count):
     studentFolders = os.listdir(rwd)
     os.chdir('..')
+    #We will in the future use testCaseGenerator to generate random test cases. These will be passed to each student file
+    #This means the student files will need to be made ahead of time to accept arguments.
     testInput = open(os.path.join(os.getcwd(), "unitTestInput.txt"), 'r')
     for i in range(0, count):
         #The key to the solution lies here
@@ -78,7 +81,6 @@ def main():
             print('Cloning ' + repoName + ' for ' + student[0])
             #Pygit cannot concatenate within the same statement
             url = student[1]
-            print(str(url))
             git.clone_repository(url, os.getcwd())
         studentcount = studentcount + 1
     #Setup the files in these repos to grade
