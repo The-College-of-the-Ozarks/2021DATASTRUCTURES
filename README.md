@@ -26,7 +26,7 @@ The main method in the student's file needs to be prefixed with 'test_'
 
 
 
-How this works:
+---How this works:---
 
 The main file runs, using pytest in order to grade the student files 
 
