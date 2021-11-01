@@ -60,7 +60,6 @@ def evaluate(rwd, rootDir, count):
         os.system('python -m pytest'  + '>> ../out.txt')
         #Generate graphvis/pyreverse charts of the classes
         os.system('C:\Users\{}\AppData\Roaming\Python\Python39\Scripts\pyreverse.exe -o pdf -p {} -d {}/{}'.format(os.getlogin(), studentFolders[i], rootDir))
-        #Copy these images to somewhere idk anymore, the scope has changed daily at this point
         f = open(os.path.join(rwd,'out.txt'))
         print(f.read())
         f.close()
