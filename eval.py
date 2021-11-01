@@ -4,6 +4,7 @@ import shutil as shell
 import pytest as ut
 import subprocess as sus
 import testCaseGenerator as tester
+import random as r
 
 '''
 Reads input from the usernames.txt file to determine who to clone repositories from.
@@ -38,24 +39,28 @@ def setupRepo(count, students, rootDir):
             shell.rmtree(os.path.join(root + '/' + students[1][student]))
         shell.copytree(os.path.join(rootDir + '/' + students[1][student]), os.path.join(root + '/' + students[1][student]))
     #Each student now has their own folder with their python files
-    return os.path.join(os.path.expandvars('%appdata%'),'homework')
+    return os.path.join(os.path.expandvars('%appdata%'),'homework'), rootDir
 
 '''
 This is where the actual unit tests are run
 the files ran against are temporarily stored in ...AppData/Roaming/homework
 and listed by username
 '''
-def evaluate(rwd, count):
+def evaluate(rwd, rootDir, count):
     studentFolders = os.listdir(rwd)
     os.chdir('..')
     #We will in the future use testCaseGenerator to generate random test cases. These will be passed to each student file
     #This means the student files will need to be made ahead of time to accept arguments.
     testInput = open(os.path.join(os.getcwd(), "unitTestInput.txt"), 'r')
     for i in range(0, count):
+        print(str(studentFolders[i]))
         #The key to the solution lies here
         #For each student folder, run this pytest. use time to find out how long execution took.
         os.chdir(os.path.join(rwd, studentFolders[i]))
         os.system('python -m pytest'  + '>> ../out.txt')
+        #Generate graphvis/pyreverse charts of the classes
+        os.system('C:\Users\{}\AppData\Roaming\Python\Python39\Scripts\pyreverse.exe -o pdf -p {} -d {}/{}'.format(os.getlogin(), studentFolders[i], rootDir))
+        #Copy these images to somewhere idk anymore, the scope has changed daily at this point
         f = open(os.path.join(rwd,'out.txt'))
         print(f.read())
         f.close()
